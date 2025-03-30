@@ -12,8 +12,8 @@ import type { Support } from 'containers/MathObjects/MathObject'
 const NewObjectButton = styled(Button)`
   font-weight: bold;
   &.ant-btn, &.ant-btn:hover, &.ant-btn:focus {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right:20px;
     background-color:rgba(0,0,0,0);
   }
 `
@@ -30,7 +30,7 @@ const GradientDiv = styled.div`
     margin-top:16px;
     margin-bottom:16px;
     margin-right:16px;
-  }
+  };
 `
 
 const WarningSpan = styled.span`
@@ -43,16 +43,24 @@ type MenuItem = {
   support: Support
 }
 
-type Props = {
-  height: string,
+export type OwnProps = {|
+  menuItems: Array<MenuItem>
+|}
+type StateProps = {|
   targetFolder: string,
   newFolderIndex: number,
   newItemIndex: number,
+|}
+type DispatchProps = {|
   setActiveObject: (string) => void,
   setContentCollapsed: (string, boolean) => void,
-  menuItems: Array<MenuItem>,
   createMathObject: CreateMathObject
-}
+|}
+export type Props = {|
+  ...OwnProps,
+  ...StateProps,
+  ...DispatchProps
+|}
 
 export default class ControllerHeader extends React.PureComponent<Props> {
 
@@ -105,7 +113,7 @@ export default class ControllerHeader extends React.PureComponent<Props> {
         <GradientDiv>
           <NewObjectButton>
             <Icon type="plus" />
-            New Object
+            Add Object
           </NewObjectButton>
         </GradientDiv>
       </Dropdown>

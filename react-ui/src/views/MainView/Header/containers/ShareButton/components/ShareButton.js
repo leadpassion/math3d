@@ -1,11 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Button, Popover, Icon, Input } from 'antd'
+import { Button, Icon, Input } from 'antd'
+import PopModal from 'components/PopModal'
 import { saveGraph } from 'services/api'
 import { dehydrate } from 'store/hydration'
 import randomstring from 'randomstring'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import typeof { setProperty as SetProperty } from 'containers/MathObjects/actions'
+import typeof { setCreationDate as SetCreationDate } from 'services/metadata/actions'
 import getCameraData from 'services/getCameraData'
 import { CAMERA } from 'containers/MathObjects'
 import styled, { keyframes } from 'styled-components'
@@ -43,7 +45,8 @@ type Props = {
   // We need access to state, but no need to rerender on ever state change.
   // So pass getState instead.
   getState: () => {},
-  setProperty: SetProperty
+  setProperty: SetProperty,
+  setCreationDate: SetCreationDate
 }
 type State = {
   id: ?string,
@@ -52,7 +55,7 @@ type State = {
 
 const URL_FRONT = process.env.NODE_ENV === 'development'
   ? 'http://localhost:3000'
-  : 'https://math3d-react.herokuapp.com'
+  : 'https://www.math3d.org'
 
 export default class ShareButton extends PureComponent<Props, State> {
 
@@ -78,6 +81,7 @@ export default class ShareButton extends PureComponent<Props, State> {
 
   saveGraph = () => {
     this.saveCameraData()
+    this.props.setCreationDate()
     const state = this.props.getState()
     const dehydrated = dehydrate(state)
     const id = this.getId()
@@ -109,12 +113,6 @@ export default class ShareButton extends PureComponent<Props, State> {
             Copied!
           </CopyStatus>
         </CopyContainer>
-
-        <p>
-          <Icon type="warning" theme="outlined" /> This updated version of math3d is in <strong>beta</strong>.
-          Graphs saved now may not work in the future.
-        </p>
-
         {
           process.env.NODE_ENV === 'development' && (
             <CopyToClipboard text={this.dehydratedJson}>
@@ -129,23 +127,21 @@ export default class ShareButton extends PureComponent<Props, State> {
 
   render() {
     return (
-      <Popover
-        placement="bottomRight"
+      <PopModal
         title={'Share your scene'}
-        content={this.renderContent()}
         onVisibleChange={this.onVisibleChange}
-        trigger="click"
+        source={
+          <span
+            onPointerDown={this.saveCameraData}
+            onClick={this.saveGraph}
+          >
+            <Icon type='cloud' style={ { paddingRight: '4px' } } />
+            Share
+          </span>
+        }
       >
-        <Button
-          size='small'
-          type='ghost'
-          onPointerDown={this.saveCameraData}
-          onClick={this.saveGraph}
-        >
-          <Icon type='cloud' />
-          Share
-        </Button>
-      </Popover>
+        {this.renderContent()}
+      </PopModal>
     )
   }
 

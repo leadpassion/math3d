@@ -1,8 +1,5 @@
 // These are "fixed" in the sense that they cannot be sorted (dragged/dropped)
 const sortableTreeFixedPortion = {
-  'root': [
-    'mainFolder'
-  ],
   'setup': [
     'cameraFolder',
     'axes'
@@ -22,7 +19,8 @@ const initialState = {
   metaData: {},
   sortableTree: {
     ...sortableTreeFixedPortion,
-    'mainFolder': []
+    root: ['mainFolder'],
+    mainFolder: []
   },
   folders: {
     'cameraFolder': {
@@ -79,5 +77,12 @@ const initialState = {
   sliders: {}
 }
 
-export { sortableTreeFixedPortion }
+const demoState = JSON.parse(JSON.stringify(initialState))
+demoState.mathGraphics['1'] = {
+  'type': 'EXPLICIT_SURFACE',
+  'color': 'rainbow'
+}
+demoState.sortableTree.mainFolder.push('1')
+
+export { sortableTreeFixedPortion, demoState }
 export default initialState

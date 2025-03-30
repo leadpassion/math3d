@@ -50,7 +50,7 @@ const labeled: MetaData = {
   labelVisible: {
     inputType: 'boolean',
     defaultValue: false,
-    label: 'label visibile'
+    label: 'label visible'
   }
 }
 
@@ -294,6 +294,11 @@ const parametricSurfacaSpecific: MetaData = {
     defaultValue: '\\left[-3, 3\\right]',
     isPrimary: true
   },
+  colorExpr: {
+    isPrimary: true,
+    inputType: 'math',
+    defaultValue: '_f(X, Y, Z, u, v)=mod(Z, 1)'
+  },
   gridOpacity: {
     inputType: 'math',
     defaultValue: '0.5'
@@ -330,6 +335,11 @@ export const explicitSurfaceMeta: MetaData = {
     inputType: 'math',
     defaultValue: '\\left[-2,\\ 2\\right]',
     isPrimary: true
+  },
+  colorExpr: {
+    isPrimary: true,
+    inputType: 'math',
+    defaultValue: '_f(X, Y, Z, x, y)=mod(Z, 1)'
   }
 }
 
@@ -352,6 +362,11 @@ export const explicitSurfacePolarMeta: MetaData = {
     inputType: 'math',
     defaultValue: '\\left[-\\pi,\\ \\pi\\right]',
     isPrimary: true
+  },
+  colorExpr: {
+    isPrimary: true,
+    inputType: 'math',
+    defaultValue: '_f(X, Y, Z, r, \\theta)=mod(Z, 1)'
   }
 }
 
@@ -453,7 +468,7 @@ export const cameraMeta: MetaData = {
   },
   relativePosition: {
     inputType: 'numericArray',
-    defaultValue: [-0.75, -1.25, 0.25],
+    defaultValue: [0.5, -2.0, 0.5],
     isPrimary: true
   },
   relativeLookAt: {

@@ -1,14 +1,18 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Button, Icon } from 'antd'
+import { Icon } from 'antd'
 import { connect } from 'react-redux'
 import { openDrawer, closeDrawer } from 'containers/Drawer/actions'
 
-type Props = {
+type OwnProps = {||}
+type StateProps = {|
   isVisible: boolean,
+|}
+type DispatchProps = {|
   closeDrawer: (id: string, animationSpeed?: string) => void,
   openDrawer: (id: string, animationSpeed?: string) => void
-}
+|}
+type Props = {| ...OwnProps, ...StateProps, ...DispatchProps |}
 
 class _ExamplesButton extends PureComponent<Props> {
 
@@ -23,10 +27,10 @@ class _ExamplesButton extends PureComponent<Props> {
 
   render() {
     return (
-      <Button onClick={this.onClick} size='small'>
-        <Icon type="bulb" />
+      <span onClick={this.onClick}>
+        <Icon type="bulb" style={ { paddingRight: '4px' } } />
         Examples
-      </Button>
+      </span>
     )
   }
 
@@ -41,4 +45,4 @@ const mapDispatchToProps = {
   closeDrawer
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(_ExamplesButton)
+export default connect<Props, OwnProps, _, _, _, _>(mapStateToProps, mapDispatchToProps)(_ExamplesButton)
