@@ -8,6 +8,18 @@ const DraggableItemContainer = styled.div`
   box-shadow: ${props => props.isDragging ? '0 0 5px gray' : ''}
 `
 
+const InnerDroppable = styled.div`
+  &:empty {
+    ::before {
+      content: "Drag an object here to add it to this folder...";
+      // use line-height instead of padding to ensure Draggables stay aligned
+      line-height: 333%;
+    }
+    text-align: center;
+    user-select: none;
+  }
+`
+
 /**
  * SortableList, React Component
  *
@@ -49,7 +61,7 @@ export default function SortableList(props) {
       {
         // eslint-disable-next-line no-unused-vars
         (provided, snapshot) => (
-          <div
+          <InnerDroppable
             ref={provided.innerRef}
             className={className}
             style={style}
@@ -62,7 +74,7 @@ export default function SortableList(props) {
               )
             ))}
             {provided.placeholder}
-          </div>
+          </InnerDroppable>
         )
       }
     </Droppable>

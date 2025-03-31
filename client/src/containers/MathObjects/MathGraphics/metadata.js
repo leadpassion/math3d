@@ -78,7 +78,8 @@ const axisSpecific: MetaData = {
   },
   scale: {
     inputType: 'math',
-    defaultValue: '1'
+    defaultValue: '1',
+    isPrimary: true
   },
   labelVisible: {
     inputType: 'boolean',
@@ -123,7 +124,7 @@ const gridSpecific: MetaData = {
   },
   snap: {
     inputType: 'boolean',
-    defaultValue: true
+    defaultValue: false
   }
 }
 

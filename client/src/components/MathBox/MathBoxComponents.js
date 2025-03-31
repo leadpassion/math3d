@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react'
+import { Color } from "three/src/math/Color.js";
 import math from 'utils/mathjs'
 import {
   validateBoolean,
@@ -15,8 +16,6 @@ import diffWithSets from 'utils/shallowDiffWithSets'
 import { lighten } from 'utils/colors'
 import marchingCubes from 'utils/marchingCubes'
 import { colorMaps } from 'constants/colors'
-
-const THREE = window.THREE
 
 type MathBoxNode = any
 
@@ -276,7 +275,7 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
     }
   }
 
-  static frustrumHeightAtDistance(fovDegrees: number, distance: number) {
+  static frustumHeightAtDistance(fovDegrees: number, distance: number) {
     return 2 * distance * Math.tan(0.5 * fovDegrees * Math.PI/180)
   }
   static fovForHeightAndDistance(height: number, distance: number) {
@@ -285,9 +284,9 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
 
   static dollyZoom(mathboxRoot: MathBoxNode, zoomFactor: number) {
     const { camera, controls } = mathboxRoot.three
-    const d1 = camera.position.distanceTo(controls.center)
+    const d1 = camera.position.distanceTo(controls.target)
     const fov1 = camera.fov
-    const h = Camera.frustrumHeightAtDistance(fov1, d1)
+    const h = Camera.frustumHeightAtDistance(fov1, d1)
     const d2 = d1 * zoomFactor
     const fov2 = Camera.fovForHeightAndDistance(h, d2)
 
@@ -299,7 +298,7 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
   }
 
   static translateForDollyZoom(camera: any, controls: any, zoomFactor: number) {
-    const d = camera.position.distanceTo(controls.center)
+    const d = camera.position.distanceTo(controls.target)
     camera.translateZ(d * (zoomFactor - 1))
   }
 
@@ -320,17 +319,17 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
 
   static handlePanIsPanEnabled(nodes: HandlerNodes, handledProps: HandledProps) {
     const { root } = nodes
-    root.three.controls.noPan = !handledProps.isPanEnabled
+    root.three.controls.enablePan = handledProps.isPanEnabled
   }
 
   static handleIsZoomEnabled(nodes: HandlerNodes, handledProps: HandledProps) {
     const { root } = nodes
-    root.three.controls.noZoom = !handledProps.isZoomEnabled
+    root.three.controls.enableZoom = handledProps.isZoomEnabled
   }
 
   static handleIsRotateEnabled(nodes: HandlerNodes, handledProps: HandledProps) {
     const { root } = nodes
-    root.three.controls.noRotate = !handledProps.isRotateEnabled
+    root.three.controls.enableRotate = handledProps.isRotateEnabled
   }
 
   static handleRelativePosition(nodes: HandlerNodes, handledProps: HandledProps) {
@@ -340,11 +339,11 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
   }
 
   static handleRelativeLookAt(nodes: HandlerNodes, handledProps: HandledProps) {
-    // MathBox Camera lookAt prop seems to do nothing. Set the center of threejs
+    // MathBox Camera lookAt prop seems to do nothing. Set the target of threejs
     // OrbitControls object instead
     const { root } = nodes
     const { relativeLookAt } = handledProps
-    root.three.controls.center.set(...relativeLookAt)
+    root.three.controls.target.set(...relativeLookAt)
   }
 
   handleUseComputed = (nodes: HandlerNodes, handledProps: HandledProps) => {
@@ -383,7 +382,7 @@ export class Camera extends AbstractMBC implements MathBoxComponent {
     const cartesian = root.select('cartesian')
     const relLookAt = Camera.toRelativeCoords(computedLookAt, cartesian)
     // set position directly on camera object, not in mathBox
-    root.three.controls.center.set(...relLookAt)
+    root.three.controls.target.set(...relLookAt)
   }
 
   static toRelativeCoords(
@@ -877,7 +876,7 @@ export class ParametricSurface extends AbstractMBC implements MathBoxComponent {
     }
 
     const colorExpr = (emit) => {
-      const { r, g, b } = new THREE.Color(color)
+      const { r, g, b } = new Color(color)
       emit(r, g, b, 1.0)
     }
 

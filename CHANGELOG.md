@@ -2,11 +2,19 @@
 
 ## Version 1.2
 
-## Versin 1.2.7
+## Version 1.2.9
+- Made axis "Scale" more visible. It's been moved from the gear settings to main Axis objects.
+- Added functions `re`, `im`, `conj`, and `arg` for complex number manipulation
+- Fixed https://github.com/ChristopherChudzicki/math3d-react/issues/290
+
+    Grid snapping is now turned off by default. Snapping attempts to snap gridlines to "nice" numbers, but can result in incorrect number of gridlines
+- Some README documentation fixes and other fixes, Thanks @nicegamer7
+
+## Version 1.2.8
  - Fixed https://github.com/ChristopherChudzicki/math3d-react/issues/250
  - Fixed a bug where vector-valued functions sometimes erroneously displayed errors that they had the incorrect number of outputs. This happened with functions that sometimes sampled to complex values, and could cause problems loading graphs.
 
-## Versin 1.2.7
+## Version 1.2.7
  - Fixed a bug where newly created folders, if saved in their default state
    (default title and open) would prevent the saved graph from loading properly.
  - Fixed a bug where Share button's "Copied!" status was not resetting properly.
@@ -21,13 +29,13 @@
    
    Note: Due to a bug in MathBox, this is not a true orthographic camera, but
    a perspective camera dollied way out, and zoomed way in ("dolly zoom"), which
-   mimicks the effect of an orthographic camera.
+   mimics the effect of an orthographic camera.
 
 ## Version 1.2.4
   - added hyperbolic trig functions and their inverses, `cosh`, `sinh`, `tanh`, `arccosh`, `arcsinh`, `arctanh`.
 
 ## Version 1.2.3
-  - Fix a bug where vector fields and implicit surfaces could would throw errors if an expression named "f(...)" was used as the right-hand-side.
+  - Fix a bug where vector fields and implicit surfaces would throw errors if an expression named "f(...)" was used as the right-hand-side.
 
 ## Version 1.2.2
   - Add `pdiff` function with signature `pdiff(f, x, y,..., 1)` for the partial derivative of `f(x, y,...)` with respect to first argument, namely `x`.
