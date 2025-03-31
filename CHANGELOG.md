@@ -2,6 +2,27 @@
 
 ## Version 1.2
 
+## Versin 1.2.7
+ - Fixed https://github.com/ChristopherChudzicki/math3d-react/issues/250
+ - Fixed a bug where vector-valued functions sometimes erroneously displayed errors that they had the incorrect number of outputs. This happened with functions that sometimes sampled to complex values, and could cause problems loading graphs.
+
+## Versin 1.2.7
+ - Fixed a bug where newly created folders, if saved in their default state
+   (default title and open) would prevent the saved graph from loading properly.
+ - Fixed a bug where Share button's "Copied!" status was not resetting properly.
+
+## Version 1.2.6
+ - Math3d.org will now prompt users to confirm when leaving the site if their
+   visualization has not been saved, or if they have loaded a previously saved
+   visualization and have made meaningful changes to it.
+
+## Version 1.2.5
+ - added an Orthographic option for the camera.
+   
+   Note: Due to a bug in MathBox, this is not a true orthographic camera, but
+   a perspective camera dollied way out, and zoomed way in ("dolly zoom"), which
+   mimicks the effect of an orthographic camera.
+
 ## Version 1.2.4
   - added hyperbolic trig functions and their inverses, `cosh`, `sinh`, `tanh`, `arccosh`, `arcsinh`, `arctanh`.
 

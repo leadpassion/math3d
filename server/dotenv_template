@@ -1,5 +1,7 @@
-NODE_ENV=development
-# Rename to .env and change MONGODB_URI
-MONGODB_URI=mongodb://localhost:27017
-# something like...
-# MONGODB_URI=mongodb://<dbuser>:<dbpassword>@ds121753.mlab.com:21753/<dbname>
+# rename this to .env and update the DATABASE_URL
+# Something of form:
+#
+DATABASE_URL=postgres://[user[:password]@][netloc][:port][,...][/dbname]
+#
+# like:
+DATABASE_URL=postgres://math3d_user:abc-123@localhost:5432/math3d
